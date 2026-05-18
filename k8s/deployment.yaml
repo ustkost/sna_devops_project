@@ -17,7 +17,7 @@ spec:
       containers:
       - name: sna-project
         image: ustkost/sna_proj:v1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         resources:
@@ -33,3 +33,9 @@ spec:
             port: 8080
           initialDelaySeconds: 5
           periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 2
+          periodSeconds: 5
