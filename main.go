@@ -18,9 +18,17 @@ func health(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "OK")
 }
 
+func load(w http.ResponseWriter, r *http.Request) {
+	for i := 0; i < 10000000; i++ {
+		_ = i * i
+	}
+	fmt.Fprintf(w, "CPU loaded")
+}
+
 func main() {
 	http.HandleFunc("/", home)
 	http.HandleFunc("/health", health)
+	http.HandleFunc("/load", load)
 
 	fmt.Println("Server running on :8080")
 	http.ListenAndServe(":8080", nil)

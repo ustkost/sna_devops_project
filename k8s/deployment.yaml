@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sna-project
+  labels:
+    app: sna-project
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sna-project
+  template:
+    metadata:
+      labels:
+        app: sna-project
+    spec:
+      containers:
+      - name: sna-project
+        image: ustkost/sna_proj:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
