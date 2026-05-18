@@ -32,6 +32,9 @@ func main() {
 	http.HandleFunc("/health", health)
 	http.HandleFunc("/load", load)
 
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		panic(err)
+	}
 	fmt.Println("Server running on :8080")
-	http.ListenAndServe(":8080", nil)
 }
